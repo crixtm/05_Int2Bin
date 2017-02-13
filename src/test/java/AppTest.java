@@ -5,8 +5,37 @@ import org.testng.annotations.*;
 import static org.testng.Assert.*;
 
 public class AppTest {
-    @Test public void appHasAGreeting() {
-        /*App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");*/
+
+    //---------------------------------------------------
+    @Test public void Test_convertIntegerToBinaryByRemainder_withNotTooBigPostive(){
+        //given
+        App classUnderTest = new App();
+        //when
+        classUnderTest.thisStringIsneedeToRecursionISuspect = "";
+        String testString = classUnderTest.convertIntegerToBinaryByRemainder(1023,10);
+        //then
+        assertEquals(testString,Integer.toBinaryString(1023));
+    }
+    @Test public void Test_convertIntegerToBinaryByRemainder_withBigPostive(){
+        //given
+        App classUnderTest = new App();
+        //when
+        classUnderTest.thisStringIsneedeToRecursionISuspect = "";
+        Double testDouble = Math.pow(2,31);
+        int testInteger = testDouble.intValue()-1;
+        String testString = classUnderTest.convertIntegerToBinaryByRemainder(testInteger,31);
+        //then
+        assertEquals(testString,Integer.toBinaryString(testInteger));
+    }
+    //---------------------------------------------------
+    //---------------------------------------------------
+    @Test public void Test_convertIntegerToBinaryByRemainder_withNegativeValue(){
+        //given
+        App classUnderTest = new App();
+        //when
+        classUnderTest.thisStringIsneedeToRecursionISuspect = "";
+        String testString = classUnderTest.convertIntegerToBinaryByRemainder(-1023,10);
+        //then
+        assertEquals(testString,Integer.toBinaryString(-1023));
     }
 }

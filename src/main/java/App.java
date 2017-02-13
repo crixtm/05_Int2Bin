@@ -6,48 +6,74 @@ import java.util.Scanner;
 public class App {
     static String thisStringIsneedeToRecursionISuspect; //naezzelmiafasztcsinaljak,hogy tudjam hasznalni meg egyebkent is mi a faszom ez a lathatosag GRRR
 
+
     public static void main(String[] args) {
         App app = new App();
         String binaryConvertedValue;
+        int originalInt = app.getValidateIntToConvert();
+        if (0 == originalInt){
+            System.out.println("converted value : 0");
+            System.exit(0);
+        }
         thisStringIsneedeToRecursionISuspect = "";
-        int originalInt = app.getIntToConvert();
-        System.out.println("java calculated value: " + Integer.toBinaryString(originalInt));
         if (0 > originalInt) {
-            thisStringIsneedeToRecursionISuspect = "-";
+            binaryConvertedValue = app.convertIntegerToBinaryByRemainder(Math.abs(originalInt), 31);
+            app.convertTheBinaryStringToSignedBinaryString();
         } else {
-            thisStringIsneedeToRecursionISuspect = "";
+            binaryConvertedValue = app.convertIntegerToBinaryByRemainder(originalInt, 31);
         }
-        app.convertIntegerToBinaryByRemainder(originalInt, 31);
-        System.out.println("Brand new method: " + thisStringIsneedeToRecursionISuspect);
-    }
-    void convertIntegerToBinaryByRemainder(int originalInt, int exponentInMethod) {
-        Double twoExponentedDouble = Math.pow(2, exponentInMethod);
-        int twoExponent = twoExponentedDouble.intValue();
-        if (0 <= exponentInMethod) {
-            if (0 < (Math.abs(originalInt) / twoExponent)) {
-                thisStringIsneedeToRecursionISuspect += "1";
-                originalInt %= twoExponent;
-            } else {
-                thisStringIsneedeToRecursionISuspect += "0";
-            }
-            convertIntegerToBinaryByRemainder(originalInt, exponentInMethod - 1);
-        }
+        System.out.println("Brand new method:      " + binaryConvertedValue);
     }
 
-    public int getIntToConvert() {
+    private int getValidateIntToConvert() {
         Scanner sc = new Scanner(System.in);
-        int i = 0;
-        boolean isConversionSuccess = false;
+        System.out.println("number?");
+        int receivedInt=0;
+        boolean isConversionSuccess;
         do {
-            System.out.println("What to convert to binary?");
             try {
-                i = Integer.valueOf(sc.nextLine());
+                receivedInt = Integer.valueOf(sc.nextLine());
                 isConversionSuccess = true;
             } catch (NumberFormatException e) {
                 isConversionSuccess = false;
             }
         } while (!isConversionSuccess);
-        return i;
+        return receivedInt;
     }
+
+    void convertTheBinaryStringToSignedBinaryString() {
+        char[] helperCharArray = thisStringIsneedeToRecursionISuspect.toCharArray();
+        for (int i = 0; i<helperCharArray.length; i++) {
+            if ('1' == helperCharArray[i]){
+                helperCharArray[i] = '0';
+            } else {
+                helperCharArray[i] = '1';
+            }
+        }
+
+        System.out.println(helperCharArray);
+     }
+    String convertIntegerToBinaryByRemainder(int originalInt, int exponentInMethod) {
+
+        Double twoExponentedDouble = Math.pow(2, exponentInMethod);
+        int twoExponent = twoExponentedDouble.intValue();
+        if (0 <= exponentInMethod) {
+            if (0 < (Math.abs(originalInt) / twoExponent)) {
+
+                thisStringIsneedeToRecursionISuspect += "1";
+                originalInt %= twoExponent;
+            } else {
+                if (thisStringIsneedeToRecursionISuspect.contains("1")) {
+                    thisStringIsneedeToRecursionISuspect += "0";
+                }
+            }
+            convertIntegerToBinaryByRemainder(originalInt, exponentInMethod - 1);
+        }
+        return thisStringIsneedeToRecursionISuspect;
+    }
+
+
+
+
 }
 
